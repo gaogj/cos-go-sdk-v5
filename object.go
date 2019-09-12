@@ -367,21 +367,21 @@ func (s *ObjectService) PostRestore(ctx context.Context, name string, opt *Objec
 // 当 r 不是 bytes.Buffer/bytes.Reader/strings.Reader 时，必须指定 opt.ObjectPutHeaderOptions.ContentLength
 //
 // https://www.qcloud.com/document/product/436/7741
-// func (s *ObjectService) Append(ctx context.Context, name string, position int, r io.Reader, opt *ObjectPutOptions) (*Response, error) {
-// 	u := fmt.Sprintf("/%s?append&position=%d", encodeURIComponent(name), position)
-// 	if position != 0{
-// 		opt = nil
-// 	}
-// 	sendOpt := sendOptions{
-// 		baseURL:   s.client.BaseURL.BucketURL,
-// 		uri:       u,
-// 		method:    http.MethodPost,
-// 		optHeader: opt,
-// 		body:      r,
-// 	}
-// 	resp, err := s.client.send(ctx, &sendOpt)
-// 	return resp, err
-// }
+func (s *ObjectService) Append(ctx context.Context, name string, position int, r io.Reader, opt *ObjectPutOptions) (*Response, error) {
+	u := fmt.Sprintf("/%s?append&position=%d", encodeURIComponent(name), position)
+	if position != 0{
+		opt = nil
+	}
+	sendOpt := sendOptions{
+		baseURL:   s.client.BaseURL.BucketURL,
+		uri:       u,
+		method:    http.MethodPost,
+		optHeader: opt,
+		body:      r,
+	}
+	resp, err := s.client.send(ctx, &sendOpt)
+	return resp, err
+}
 
 // ObjectDeleteMultiOptions is the option of DeleteMulti
 type ObjectDeleteMultiOptions struct {
